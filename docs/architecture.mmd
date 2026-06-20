@@ -1,0 +1,25 @@
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "fontFamily": "Arial, Helvetica, sans-serif",
+    "lineColor": "#374151",
+    "primaryTextColor": "#111827"
+  }
+}}%%
+flowchart TB
+    A["<b>Evidence-bearing input state</b><br/>structured fields · notes · timestamps<br/>source provenance · assertion · missingness"]:::blue
+    B["<b>Patient--eye--episode abstraction</b><br/>same-eye eligibility · index-time window<br/>field-level evidence metadata"]:::gray
+    C["<b>Disease and laterality scope gate</b><br/>DR/DME demo policy · same-eye comparison<br/>otherwise: Out of scope"]:::purple
+    D["<b>Semantic lifting boundary</b><br/>deterministic synthetic extractor<br/>governed LLM adapter must be grounded"]:::orange
+    E["<b>Versioned decision policy</b><br/>urgency · management domain · treatment<br/>safety · follow-up · referral · tests"]:::green
+    F["<b>Compiled SMT distinguishing query</b><br/>bind observed inputs · compile policy branches<br/>search for an output counterexample"]:::red
+    G["<b>Audit-oriented verdict</b><br/>Equivalent under Guideline · Non-equivalent<br/>Indeterminate · Out of scope"]:::gray
+
+    A --> B --> C --> D --> E --> F --> G
+
+    classDef blue fill:#DCEEFF,stroke:#2E75B6,color:#102A43,stroke-width:1.8px;
+    classDef purple fill:#EEE4FF,stroke:#7E57C2,color:#2E1A47,stroke-width:1.8px;
+    classDef orange fill:#FFE7C2,stroke:#E58A00,color:#5A3300,stroke-width:1.8px;
+    classDef green fill:#DDF5E5,stroke:#3C9D63,color:#123D26,stroke-width:1.8px;
+    classDef red fill:#FFE0E0,stroke:#C94C4C,color:#5A1111,stroke-width:1.8px;
+    classDef gray fill:#F3F4F6,stroke:#6B7280,color:#111827,stroke-width:1.8px;
