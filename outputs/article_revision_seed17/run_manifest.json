@@ -1,0 +1,45 @@
+{
+  "artifacts": {
+    "ablation_summary.csv": "afb57a3c83ac439973916ac21bd6faf1ec3e15a0db40eb5e42a3ef63b1a2b3ca",
+    "audit_records.jsonl": "cfa61392ac5d01038f7cf2814a9bf2dd59aed9d2d5d9d4ceb1834fda905210e4",
+    "environment.json": "a384822ddf2eaa45f50e55e69132ff192dc74e2ad3769d7ce0ecbe18d86bf4bd",
+    "fixture_manifest.json": "b7ed08bee0aa28e92eb99eda3b9a02aff5a5561b32aa2c9f4325eb5f78344680",
+    "fixtures.jsonl": "fdebba9af017fc028a6cbff88466f0e54c54cc9971bb4b5cd7113dad61547f51",
+    "generated_table.tex": "df4727d83bdcb0465f7cc7b7505419a1eb0ae6b8ab617583757ec26629f96d7a",
+    "metrics.json": "d5389c05d04c305d76d55fee25ce8b753e2185666f9923f6db83b35c36eb560c",
+    "pair_predictions.csv": "a378b320ef846eece209c8cf0e570d33306777b1b0c6ecc0701e91f960b23505",
+    "policy_manifest.json": "c834ecc046a75666eba24f21ad704c3edc4f788988c53df5f70f9444a0d8fa0a",
+    "policy_version_perturbation.jsonl": "8fff7d8ff677bb2c598b15c52bae2bbfb749183c08ac2d14d2fd2b3e711d553a",
+    "report.md": "1061975cd88667a28007fea89a21a121b760ccfac1ba86885916ab68cc6ffe14",
+    "run_metadata.json": "c78d55327b181469476cabc394c5fdf26202843ff688a24bc7d3f0b898949e00"
+  },
+  "code_commit": "unavailable_in_source_archive",
+  "command": "python -m epp_nsv.experiments --n-pairs 64 --seed 17 --out-dir outputs/article_revision_seed17",
+  "dependency_lock": {
+    "path": "requirements.lock",
+    "sha256": "d29248dbd1608249e625f6e470e2cf648fff4820444e3592bf8294232576fd62"
+  },
+  "environment_file": "environment.json",
+  "fixture_manifest": {
+    "family_ids": [
+      "contradictory_evidence",
+      "cross_eye_mismatch",
+      "equivalent_demographic_shift",
+      "missing_critical_evidence",
+      "policy_near_miss",
+      "policy_version_perturbation",
+      "stale_or_post_index_observation",
+      "treatment_token_trap"
+    ],
+    "file": "fixture_manifest.json",
+    "pair_count": 64,
+    "seed": 17,
+    "version": "synthetic-fixture-suite-v2"
+  },
+  "generated_at_utc": "2026-06-20T22:40:32.642483+00:00",
+  "interpretation_boundary": "synthetic software-validation run only; not clinical evaluation",
+  "policy_manifest": {
+    "policy_hash": "f7bbe4a6a8c3f183b163d71dd8e9aec31b54ae433b36d59a280c12ca2cb7239c",
+    "policy_id": "DEMO-DRDME-v1"
+  }
+}

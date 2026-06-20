@@ -26,7 +26,7 @@ def test_equivalent_despite_demographic_difference(complete_episode):
         episode_id="EP-2", patient_id="PT-2", age_years=74, hba1c=9.9, egfr=52.0
     )
     result = verifier.verify(complete_episode, altered)
-    assert result.verdict == Verdict.EQUIVALENT_UNDER_GUIDELINE
+    assert result.verdict == Verdict.EQUIVALENT_UNDER_POLICY
     assert result.solver_status == "unsat"
     assert result.audit["smt_encoding"] == "compiled_policy_branch_expressions"
 
@@ -59,7 +59,7 @@ def test_note_constraint_is_lifted_only_when_contract_is_complete(complete_episo
         **metadata,
     )
     result = verifier.verify(complete_episode, note_only)
-    assert result.verdict == Verdict.EQUIVALENT_UNDER_GUIDELINE
+    assert result.verdict == Verdict.EQUIVALENT_UNDER_POLICY
     assert result.audit["lifted_b"] == {"macular_edema": True}
     assert len(result.audit["accepted_candidates_b"]) == 1
 
@@ -105,7 +105,7 @@ def test_post_index_treatment_token_is_excluded_from_policy_input(complete_episo
         recorded_treatment_at="2026-01-16",
     )
     result = verifier.verify(complete_episode, with_token)
-    assert result.verdict == Verdict.EQUIVALENT_UNDER_GUIDELINE
+    assert result.verdict == Verdict.EQUIVALENT_UNDER_POLICY
     assert any(item["field"] == "recorded_treatment_token" for item in result.audit["rejected_facts_b"])
 
 
@@ -132,10 +132,10 @@ def test_policy_version_perturbation_is_recorded_as_a_versioned_change():
     base = EPPVerifier(DRDMEPolicy()).verify(case.observed_a, case.observed_b)
     variant = EPPVerifier(
         DRDMEPolicy(
-            guideline_id="DEMO-DRDME-v1-perturbed",
+            policy_id="DEMO-DRDME-v1-perturbed",
             rule_version="v2-synthetic-1-perturbed",
             non_centre_macular_requires_review=False,
         )
     ).verify(case.observed_a, case.observed_b)
     assert base.verdict == Verdict.NON_EQUIVALENT
-    assert variant.verdict == Verdict.EQUIVALENT_UNDER_GUIDELINE
+    assert variant.verdict == Verdict.EQUIVALENT_UNDER_POLICY

@@ -48,7 +48,7 @@ class EPPVerifier:
     def _base_audit(self) -> dict[str, Any]:
         policy_hash = self.policy.policy_hash() if hasattr(self.policy, "policy_hash") else "unavailable"
         return {
-            "policy_id": self.policy.guideline_id,
+            "policy_id": self.policy.policy_id,
             "policy_hash": policy_hash,
             "policy_scope": "synthetic_demonstration_policy",
             "run_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -114,10 +114,10 @@ class EPPVerifier:
         audit["rejected_facts_a"] = rejected_facts_a
         audit["rejected_facts_b"] = rejected_facts_b
         audit["evidence_graph_a"] = build_evidence_graph(
-            a, critical_fields=self.policy.critical_fields, policy_id=self.policy.guideline_id
+            a, critical_fields=self.policy.critical_fields, policy_id=self.policy.policy_id
         )
         audit["evidence_graph_b"] = build_evidence_graph(
-            b, critical_fields=self.policy.critical_fields, policy_id=self.policy.guideline_id
+            b, critical_fields=self.policy.critical_fields, policy_id=self.policy.policy_id
         )
 
         if self.enforce_missingness:
@@ -235,7 +235,7 @@ class EPPVerifier:
         if result == unsat:
             audit["counterexample"] = None
             return VerificationResult(
-                verdict=Verdict.EQUIVALENT_UNDER_GUIDELINE,
+                verdict=Verdict.EQUIVALENT_UNDER_POLICY,
                 reasons=("decision_vector_equal_under_named_policy",),
                 solver_status="unsat",
                 decision_a=decision_a,
@@ -283,7 +283,7 @@ class EPPVerifier:
         audit["counterexample"] = None
         if not differences:
             return VerificationResult(
-                verdict=Verdict.EQUIVALENT_UNDER_GUIDELINE,
+                verdict=Verdict.EQUIVALENT_UNDER_POLICY,
                 reasons=("policy_outputs_equal_without_counterexample_query",),
                 solver_status="not_run",
                 decision_a=decision_a,

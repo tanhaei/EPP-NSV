@@ -56,7 +56,7 @@ def _policy_manifest_and_hash(policy: Any) -> tuple[dict[str, Any], str]:
     manifest = (
         policy.policy_manifest()
         if hasattr(policy, "policy_manifest") and callable(policy.policy_manifest)
-        else {"policy_id": policy.guideline_id, "contract": "private_policy_factory"}
+        else {"policy_id": policy.policy_id, "contract": "private_policy_factory"}
     )
     policy_hash = (
         policy.policy_hash()
@@ -75,7 +75,7 @@ def _load_policy_factory(specification: str):
     factory: Callable[[], Any] = getattr(module, attribute)
     policy = factory()
     required = {
-        "guideline_id",
+        "policy_id",
         "critical_fields",
         "domain_ok",
         "pair_scope_issues",
@@ -167,7 +167,7 @@ def run_controlled_evaluation(
                 "pair_id": reference.pair_id,
                 "episode_a_id": reference.episode_a_id,
                 "episode_b_id": reference.episode_b_id,
-                "policy_id": policy.guideline_id,
+                "policy_id": policy.policy_id,
                 "policy_hash": policy_hash,
                 "epp_verdict": result.verdict.value,
                 "solver_status": result.solver_status,
@@ -189,7 +189,7 @@ def run_controlled_evaluation(
 
     summary: dict[str, object] = {
         "data_scope": "controlled_external_input_not_committed_to_public_repository",
-        "policy_id": policy.guideline_id,
+        "policy_id": policy.policy_id,
         "policy_hash": policy_hash,
         "policy_manifest": policy_manifest,
         "input_hashes": {
@@ -232,7 +232,7 @@ def run_controlled_evaluation(
     run_manifest = {
         "data_scope": "controlled_secure_run_only",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        "policy_id": policy.guideline_id,
+        "policy_id": policy.policy_id,
         "policy_hash": policy_hash,
         "code_commit": _git_commit(),
         "environment": {

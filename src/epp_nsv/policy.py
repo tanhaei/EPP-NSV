@@ -22,7 +22,7 @@ from .models import DecisionVector, DiseaseFamily, Eye, PatientEyeEpisode
 class DRDMEPolicy:
     """Frozen synthetic policy and observation contract used by the public suite."""
 
-    guideline_id: str = "DEMO-DRDME-v1"
+    policy_id: str = "DEMO-DRDME-v1"
     rule_version: str = "v2-synthetic-1"
     max_observation_age_days: int = 90
     non_centre_macular_requires_review: bool = True
@@ -354,7 +354,7 @@ class DRDMEPolicy:
 
     def policy_manifest(self) -> dict[str, Any]:
         return {
-            "policy_id": self.guideline_id,
+            "policy_id": self.policy_id,
             "rule_version": self.rule_version,
             "synthetic_only": True,
             "decision_vector": list(self.signature_fields()),

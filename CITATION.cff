@@ -1,11 +1,11 @@
 cff-version: 1.2.0
-message: "If you use this repository, cite the EPP-NSV software prototype and identify the exact release tag or commit."
+message: "If you use this repository, cite the EPP-NSV software prototype and identify the exact archival release, source hash, or commit."
 title: "EPP-NSV Public Reproducibility Package"
 type: software
 authors:
   - family-names: Tanhaei
     given-names: Mohammad
-version: 0.3.0
+version: 0.3.1
 date-released: 2026-06-21
 license: MIT
 abstract: "Research-only prototype for decision-scoped patient-state equivalence, with synthetic DR/DME verification fixtures and a controlled-study harness. The package contains no patient-level data and no clinical-performance results."

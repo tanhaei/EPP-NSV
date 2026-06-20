@@ -157,7 +157,7 @@ def _render_report(n_pairs: int, seed: int, metrics: dict[str, dict[str, object]
         "- Oracle: versioned synthetic policy; not clinician adjudication or clinical truth.",
         "- Interpretation: software conformance and guard behaviour only; not clinical accuracy, safety, coverage, or treatment validity.",
         "",
-        "| Method | Fixture conformance | Counterexample availability | Indeterminate abstention | Scope safety |",
+        "| Method | Fixture conformance | Witness availability | Indeterminate abstention | Scope safety |",
         "|---|---:|---:|---:|---:|",
     ]
     for name, values in metrics.items():
@@ -208,7 +208,7 @@ def _fixture_manifest(cases: list[PairCase], seed: int) -> dict[str, object]:
 
 def _policy_version_comparison(cases: list[PairCase]) -> list[dict[str, object]]:
     variant = DRDMEPolicy(
-        guideline_id="DEMO-DRDME-v1-perturbed",
+        policy_id="DEMO-DRDME-v1-perturbed",
         rule_version="v2-synthetic-1-perturbed",
         non_centre_macular_requires_review=False,
     )
@@ -222,8 +222,8 @@ def _policy_version_comparison(cases: list[PairCase]) -> list[dict[str, object]]
             {
                 "case_id": case.case_id,
                 "category": case.category,
-                "base_policy_id": DRDMEPolicy().guideline_id,
-                "variant_policy_id": variant.guideline_id,
+                "base_policy_id": DRDMEPolicy().policy_id,
+                "variant_policy_id": variant.policy_id,
                 "variant_policy_hash": variant.policy_hash(),
                 "expected_variant_verdict": case.policy_variant_expected_verdict.value,
                 "actual_variant_verdict": result.verdict.value,
@@ -315,7 +315,7 @@ def run_experiment(n_pairs: int, seed: int, out_dir: Path) -> dict[str, object]:
         "reference_standard": "synthetic_policy_oracle_not_clinician_adjudication",
         "n_pairs": n_pairs,
         "seed": seed,
-        "policy_id": policy.guideline_id,
+        "policy_id": policy.policy_id,
         "policy_hash": policy.policy_hash(),
         "semantic_lifting": "deterministic_rule_based_fixture_extractor_not_llm",
         "clinical_performance_claim_permitted": False,
@@ -346,7 +346,7 @@ def run_experiment(n_pairs: int, seed: int, out_dir: Path) -> dict[str, object]:
             "pair_count": fixture_manifest["pair_count"],
             "family_ids": fixture_manifest["family_ids"],
         },
-        "policy_manifest": {"policy_id": policy.guideline_id, "policy_hash": policy.policy_hash()},
+        "policy_manifest": {"policy_id": policy.policy_id, "policy_hash": policy.policy_hash()},
         "command": f"python -m epp_nsv.experiments --n-pairs {n_pairs} --seed {seed} --out-dir {out_dir}",
         "environment_file": "environment.json",
         "dependency_lock": {

@@ -38,7 +38,7 @@ pair_id,episode_a_id,episode_b_id,reference_verdict
 pair_id,adjudicator_id,verdict
 ```
 
-Reference verdicts must use the public vocabulary: `Equivalent`, `Equivalent under Guideline`, `Non-equivalent`, `Indeterminate`, `Out of scope`, or `Verification failure`.
+Reference verdicts must use the public vocabulary: `Equivalent`, `Equivalent under Policy`, `Non-equivalent`, `Indeterminate`, `Out of scope`, or `Verification failure`.
 
 ## Required controlled safeguards
 
@@ -64,4 +64,4 @@ The destination contains `controlled_predictions.csv`, `controlled_audit_records
 
 ## V2 private-policy factory contract
 
-A private policy factory supplied through `--policy-factory package.module:callable` must return an object exposing the V2 verification contract: `guideline_id`, `critical_fields`, `domain_ok`, `pair_scope_issues`, `pair_observation_issues`, `observation_issues`, `fact_audit`, `decision`, `unsafe_impute_for_ablation`, `signature_fields`, `output_codebook`, `smt_output_expressions`, `decision_difference`, `policy_manifest`, and `policy_hash`. The runner rejects incomplete policies before reading a study output. The public demonstration policy is synthetic and must not be substituted for a governed clinical policy.
+A private policy factory supplied through `--policy-factory package.module:callable` must return an object exposing the V2 verification contract: `policy_id`, `critical_fields`, `domain_ok`, `pair_scope_issues`, `pair_observation_issues`, `observation_issues`, `fact_audit`, `decision`, `unsafe_impute_for_ablation`, `signature_fields`, `output_codebook`, `smt_output_expressions`, `decision_difference`, `policy_manifest`, and `policy_hash`. The runner rejects incomplete policies before reading a study output. The public demonstration policy is synthetic and must not be substituted for a governed clinical policy.

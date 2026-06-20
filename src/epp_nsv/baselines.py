@@ -48,7 +48,7 @@ class SimilarityBaseline:
         va, vb = self._vector(a), self._vector(b)
         distance = sqrt(sum((x - y) ** 2 for x, y in zip(va, vb)))
         if distance <= self.threshold:
-            verdict = Verdict.EQUIVALENT_UNDER_GUIDELINE
+            verdict = Verdict.EQUIVALENT_UNDER_POLICY
             reasons = (f"handcrafted_distance={distance:.4f}<=threshold",)
         else:
             verdict = Verdict.NON_EQUIVALENT

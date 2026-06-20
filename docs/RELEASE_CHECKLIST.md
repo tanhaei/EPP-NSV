@@ -13,7 +13,7 @@
 
 - [ ] Every public metric is labelled as synthetic-policy-oracle or software-conformance evidence.
 - [ ] No public claim reports clinical accuracy, safety, cohort size, completeness, latency, clinician agreement, or real-world ablation results.
-- [ ] `Equivalent under Guideline` is used for a single-policy `unsat` result; unqualified equivalence is not implied.
+- [ ] `Equivalent under Policy` is used for a single-policy `unsat` result; unqualified equivalence is not implied.
 - [ ] The manuscript states that `recorded_treatment_token` is excluded from policy input at the index time.
 - [ ] No LLM, multimodal embedding, or clinical knowledge-graph result is claimed without a released or governed implementation and matching run artifacts.
 

@@ -31,10 +31,14 @@ class DiseaseFamily(str, Enum):
 
 
 class Verdict(str, Enum):
-    """Conservative, policy-relative verdict vocabulary used by V2."""
+    """Conservative, policy-relative verdict vocabulary used by V2.
+
+    The public value deliberately says ``Policy``: the bundled DEMO-DRDME-v1
+    artifact is a synthetic test policy and not a clinical guideline.
+    """
 
     EQUIVALENT = "Equivalent"
-    EQUIVALENT_UNDER_GUIDELINE = "Equivalent under Guideline"
+    EQUIVALENT_UNDER_POLICY = "Equivalent under Policy"
     NON_EQUIVALENT = "Non-equivalent"
     INDETERMINATE = "Indeterminate"
     OUT_OF_SCOPE = "Out of scope"
@@ -42,7 +46,7 @@ class Verdict(str, Enum):
 
     @property
     def is_equivalent(self) -> bool:
-        return self in {Verdict.EQUIVALENT, Verdict.EQUIVALENT_UNDER_GUIDELINE}
+        return self in {Verdict.EQUIVALENT, Verdict.EQUIVALENT_UNDER_POLICY}
 
 
 @dataclass(frozen=True)

@@ -1,0 +1,341 @@
+{
+  "ablation_collapse_laterality": {
+    "exact_conformance_count": 56,
+    "expected_indeterminate_abstention_rate": 1.0,
+    "expected_non_equivalent_counterexample_rate": 1.0,
+    "expected_out_of_scope_rate": 0.0,
+    "expected_verdict_distribution": {
+      "Equivalent under Policy": 16,
+      "Indeterminate": 24,
+      "Non-equivalent": 16,
+      "Out of scope": 8
+    },
+    "fixture_conformance_rate": 0.875,
+    "n_pairs": 64,
+    "per_expected_verdict": {
+      "Equivalent under Policy": {
+        "correct": 16,
+        "n_expected": 16,
+        "recall": 1.0
+      },
+      "Indeterminate": {
+        "correct": 24,
+        "n_expected": 24,
+        "recall": 1.0
+      },
+      "Non-equivalent": {
+        "correct": 16,
+        "n_expected": 16,
+        "recall": 1.0
+      },
+      "Out of scope": {
+        "correct": 0,
+        "n_expected": 8,
+        "recall": 0.0
+      }
+    },
+    "prediction_verdict_distribution": {
+      "Equivalent under Policy": 24,
+      "Indeterminate": 24,
+      "Non-equivalent": 16
+    },
+    "unsafe_equivalence_on_guard_fixtures": 8
+  },
+  "ablation_remove_provenance_validation": {
+    "exact_conformance_count": 48,
+    "expected_indeterminate_abstention_rate": 0.3333,
+    "expected_non_equivalent_counterexample_rate": 1.0,
+    "expected_out_of_scope_rate": 1.0,
+    "expected_verdict_distribution": {
+      "Equivalent under Policy": 16,
+      "Indeterminate": 24,
+      "Non-equivalent": 16,
+      "Out of scope": 8
+    },
+    "fixture_conformance_rate": 0.75,
+    "n_pairs": 64,
+    "per_expected_verdict": {
+      "Equivalent under Policy": {
+        "correct": 16,
+        "n_expected": 16,
+        "recall": 1.0
+      },
+      "Indeterminate": {
+        "correct": 8,
+        "n_expected": 24,
+        "recall": 0.3333
+      },
+      "Non-equivalent": {
+        "correct": 16,
+        "n_expected": 16,
+        "recall": 1.0
+      },
+      "Out of scope": {
+        "correct": 8,
+        "n_expected": 8,
+        "recall": 1.0
+      }
+    },
+    "prediction_verdict_distribution": {
+      "Equivalent under Policy": 32,
+      "Indeterminate": 8,
+      "Non-equivalent": 16,
+      "Out of scope": 8
+    },
+    "unsafe_equivalence_on_guard_fixtures": 16
+  },
+  "ablation_remove_scope_gate": {
+    "exact_conformance_count": 56,
+    "expected_indeterminate_abstention_rate": 1.0,
+    "expected_non_equivalent_counterexample_rate": 1.0,
+    "expected_out_of_scope_rate": 0.0,
+    "expected_verdict_distribution": {
+      "Equivalent under Policy": 16,
+      "Indeterminate": 24,
+      "Non-equivalent": 16,
+      "Out of scope": 8
+    },
+    "fixture_conformance_rate": 0.875,
+    "n_pairs": 64,
+    "per_expected_verdict": {
+      "Equivalent under Policy": {
+        "correct": 16,
+        "n_expected": 16,
+        "recall": 1.0
+      },
+      "Indeterminate": {
+        "correct": 24,
+        "n_expected": 24,
+        "recall": 1.0
+      },
+      "Non-equivalent": {
+        "correct": 16,
+        "n_expected": 16,
+        "recall": 1.0
+      },
+      "Out of scope": {
+        "correct": 0,
+        "n_expected": 8,
+        "recall": 0.0
+      }
+    },
+    "prediction_verdict_distribution": {
+      "Equivalent under Policy": 24,
+      "Indeterminate": 24,
+      "Non-equivalent": 16
+    },
+    "unsafe_equivalence_on_guard_fixtures": 8
+  },
+  "ablation_remove_temporal_filter": {
+    "exact_conformance_count": 56,
+    "expected_indeterminate_abstention_rate": 0.6667,
+    "expected_non_equivalent_counterexample_rate": 1.0,
+    "expected_out_of_scope_rate": 1.0,
+    "expected_verdict_distribution": {
+      "Equivalent under Policy": 16,
+      "Indeterminate": 24,
+      "Non-equivalent": 16,
+      "Out of scope": 8
+    },
+    "fixture_conformance_rate": 0.875,
+    "n_pairs": 64,
+    "per_expected_verdict": {
+      "Equivalent under Policy": {
+        "correct": 16,
+        "n_expected": 16,
+        "recall": 1.0
+      },
+      "Indeterminate": {
+        "correct": 16,
+        "n_expected": 24,
+        "recall": 0.6667
+      },
+      "Non-equivalent": {
+        "correct": 16,
+        "n_expected": 16,
+        "recall": 1.0
+      },
+      "Out of scope": {
+        "correct": 8,
+        "n_expected": 8,
+        "recall": 1.0
+      }
+    },
+    "prediction_verdict_distribution": {
+      "Equivalent under Policy": 24,
+      "Indeterminate": 16,
+      "Non-equivalent": 16,
+      "Out of scope": 8
+    },
+    "unsafe_equivalence_on_guard_fixtures": 8
+  },
+  "ablation_treat_missing_as_absent": {
+    "exact_conformance_count": 40,
+    "expected_indeterminate_abstention_rate": 0.0,
+    "expected_non_equivalent_counterexample_rate": 1.0,
+    "expected_out_of_scope_rate": 1.0,
+    "expected_verdict_distribution": {
+      "Equivalent under Policy": 16,
+      "Indeterminate": 24,
+      "Non-equivalent": 16,
+      "Out of scope": 8
+    },
+    "fixture_conformance_rate": 0.625,
+    "n_pairs": 64,
+    "per_expected_verdict": {
+      "Equivalent under Policy": {
+        "correct": 16,
+        "n_expected": 16,
+        "recall": 1.0
+      },
+      "Indeterminate": {
+        "correct": 0,
+        "n_expected": 24,
+        "recall": 0.0
+      },
+      "Non-equivalent": {
+        "correct": 16,
+        "n_expected": 16,
+        "recall": 1.0
+      },
+      "Out of scope": {
+        "correct": 8,
+        "n_expected": 8,
+        "recall": 1.0
+      }
+    },
+    "prediction_verdict_distribution": {
+      "Equivalent under Policy": 39,
+      "Non-equivalent": 17,
+      "Out of scope": 8
+    },
+    "unsafe_equivalence_on_guard_fixtures": 23
+  },
+  "epp_nsv_full": {
+    "exact_conformance_count": 64,
+    "expected_indeterminate_abstention_rate": 1.0,
+    "expected_non_equivalent_counterexample_rate": 1.0,
+    "expected_out_of_scope_rate": 1.0,
+    "expected_verdict_distribution": {
+      "Equivalent under Policy": 16,
+      "Indeterminate": 24,
+      "Non-equivalent": 16,
+      "Out of scope": 8
+    },
+    "fixture_conformance_rate": 1.0,
+    "n_pairs": 64,
+    "per_expected_verdict": {
+      "Equivalent under Policy": {
+        "correct": 16,
+        "n_expected": 16,
+        "recall": 1.0
+      },
+      "Indeterminate": {
+        "correct": 24,
+        "n_expected": 24,
+        "recall": 1.0
+      },
+      "Non-equivalent": {
+        "correct": 16,
+        "n_expected": 16,
+        "recall": 1.0
+      },
+      "Out of scope": {
+        "correct": 8,
+        "n_expected": 8,
+        "recall": 1.0
+      }
+    },
+    "prediction_verdict_distribution": {
+      "Equivalent under Policy": 16,
+      "Indeterminate": 24,
+      "Non-equivalent": 16,
+      "Out of scope": 8
+    },
+    "unsafe_equivalence_on_guard_fixtures": 0
+  },
+  "handcrafted_similarity_baseline": {
+    "exact_conformance_count": 32,
+    "expected_indeterminate_abstention_rate": 0.0,
+    "expected_non_equivalent_counterexample_rate": 0.0,
+    "expected_out_of_scope_rate": 0.0,
+    "expected_verdict_distribution": {
+      "Equivalent under Policy": 16,
+      "Indeterminate": 24,
+      "Non-equivalent": 16,
+      "Out of scope": 8
+    },
+    "fixture_conformance_rate": 0.5,
+    "n_pairs": 64,
+    "per_expected_verdict": {
+      "Equivalent under Policy": {
+        "correct": 16,
+        "n_expected": 16,
+        "recall": 1.0
+      },
+      "Indeterminate": {
+        "correct": 0,
+        "n_expected": 24,
+        "recall": 0.0
+      },
+      "Non-equivalent": {
+        "correct": 16,
+        "n_expected": 16,
+        "recall": 1.0
+      },
+      "Out of scope": {
+        "correct": 0,
+        "n_expected": 8,
+        "recall": 0.0
+      }
+    },
+    "prediction_verdict_distribution": {
+      "Equivalent under Policy": 45,
+      "Non-equivalent": 19
+    },
+    "unsafe_equivalence_on_guard_fixtures": 29
+  },
+  "policy_evaluator_without_counterexample_query": {
+    "exact_conformance_count": 64,
+    "expected_indeterminate_abstention_rate": 1.0,
+    "expected_non_equivalent_counterexample_rate": 0.0,
+    "expected_out_of_scope_rate": 1.0,
+    "expected_verdict_distribution": {
+      "Equivalent under Policy": 16,
+      "Indeterminate": 24,
+      "Non-equivalent": 16,
+      "Out of scope": 8
+    },
+    "fixture_conformance_rate": 1.0,
+    "n_pairs": 64,
+    "per_expected_verdict": {
+      "Equivalent under Policy": {
+        "correct": 16,
+        "n_expected": 16,
+        "recall": 1.0
+      },
+      "Indeterminate": {
+        "correct": 24,
+        "n_expected": 24,
+        "recall": 1.0
+      },
+      "Non-equivalent": {
+        "correct": 16,
+        "n_expected": 16,
+        "recall": 1.0
+      },
+      "Out of scope": {
+        "correct": 8,
+        "n_expected": 8,
+        "recall": 1.0
+      }
+    },
+    "prediction_verdict_distribution": {
+      "Equivalent under Policy": 16,
+      "Indeterminate": 24,
+      "Non-equivalent": 16,
+      "Out of scope": 8
+    },
+    "unsafe_equivalence_on_guard_fixtures": 0
+  }
+}

@@ -1,31 +1,40 @@
-# EPP-NSV: Public Reproducibility Package for Decision-Scoped Patient--Eye--Episode Verification
+# EPP-NSV: Public Reproducibility Package for Decision-Scoped Patient Equivalence
 
-> **Similarity is not equivalence.** EPP-NSV asks whether two synthetic patient--eye--episode states are indistinguishable under one explicit, versioned policy and observation model. It is a research-software prototype, not a diagnostic, triage, treatment-selection, or autonomous clinical system.
+> **Similarity is not equivalence.** EPP-NSV is a research prototype for asking whether two **patient--eye--episode** states are indistinguishable under an explicit, versioned decision policy and observation model. It is not a diagnostic, triage, or treatment system.
 
-## Evidence boundary
+## What this public repository establishes
 
-| Tier | Publicly reproducible here | Not established here |
+| Evidence tier | Publicly reproducible here | Not established here |
 |---|---|---|
-| Software implementation | Typed normalisation, evidence contracts, same-eye scope gate, temporal/provenance/missingness guards, deterministic synthetic lifting, policy compilation, SMT counterexample queries, typed evidence graphs, audits, and tests. | Clinical safety, treatment benefit, or real-patient interchangeability. |
-| Synthetic verification | Exact conformance against a versioned synthetic-policy oracle, including deliberate guard ablations. | Performance on BioArc or any patient-level dataset. |
-| Future controlled study | Private-run adapter, pair-reference utilities, controlled audit output, and run-manifest support. | A completed clinical study, unless its governed artifacts are produced and reviewed separately. |
+| Software implementation | Typed state handling, disease/laterality scope gates, deterministic semantic-lifting fixtures, conservative missingness/temporal guards, policy compilation, SMT counterexample queries, audit records, unit tests. | Clinical safety or effectiveness. |
+| Synthetic verification | Reproducible behavior against generated synthetic fixture labels, including ablations. | Performance on BioArc or any patient-level dataset. |
+| Controlled clinical study | A private-run harness, input schemas, adjudication utilities, and release checklist. | A completed controlled study unless its approved private artifacts are produced and independently auditable. |
 
-The repository contains **no BioArc patient-level records, clinical notes, images, patient-derived pairs, re-identification keys, or controlled-study result bundle**. Synthetic fixtures are BioArc-informed only at the public schema and permitted aggregate-calibration-interface level.
+The repository contains **no BioArc patient-level data, real clinical notes, screenshots, re-identification keys, or real-data result bundle**. It must not be used to support numerical claims such as cohort size, clinician agreement, precision, coverage, latency, or ablation effects from a clinical dataset unless those results are produced in a governed environment and documented with an immutable run manifest.
 
-## Implemented V2 contract
+Read [`docs/ARTICLE_ALIGNMENT.md`](docs/ARTICLE_ALIGNMENT.md) before citing this repository alongside a manuscript.
 
-- a synthetic **patient--eye--episode** state with `OD`, `OS`, `OU`, and `UNK` laterality;
-- a narrow, abstract DR/DME-inspired demonstration policy (`DEMO-DRDME-v1`), with a four-component decision vector: scope status, management tier, review-urgency tier, and evidence status;
-- same-eye/disease scope gating, with unresolved laterality treated as **Indeterminate** rather than silently treated as negative or out-of-scope;
-- required field-level provenance, evidence span, assertion, validation, observation time, confidence, and missingness semantics;
-- explicit exclusion of `recorded_treatment_token` from policy inputs at the index time;
-- a minimal typed evidence graph for fact, source, predicate, decision, support/contradiction, temporal, laterality, and dependency traces;
-- deterministic, evidence-bearing synthetic note lifting only; no LLM is bundled or evaluated;
-- compiled Z3 counterexample queries with `sat`, `unsat`, and conservative verification-failure handling;
-- eight synthetic fixture families: demographic shifts, policy near misses, cross-eye mismatch, missing evidence, stale evidence, treatment-token traps, contradictory evidence, and policy-version perturbations;
-- a run bundle containing fixtures, fixture manifest, policy manifest/hash, predictions, audit records, metrics, ablations, environment metadata, dependency-lock hash, generated table commands, and an integrity manifest.
+## What is implemented
 
-## Quick start: synthetic software validation
+- a typed **patient--eye--episode** state with laterality, timestamp, provenance, evidence span, assertion, validation status, confidence, and explicit missingness;
+- a **DR/DME synthetic demonstration policy** with a same-eye and disease-scope gate;
+- deterministic note lifting for synthetic fixtures, with an evidence-bearing contract for a future governed LLM adapter;
+- a compiled **Z3 SMT distinguishing query** over policy branches, not merely a comparison of precomputed output constants;
+- conservative verdicts: **Equivalent under Policy**, **Non-equivalent**, **Indeterminate**, and **Out of scope**;
+- synthetic fixture categories for demographic shifts, near misses, note-only constraints, missingness, stale observations, and treatment-token traps;
+- a handcrafted similarity baseline and ablations;
+- a controlled-study harness that accepts externally governed episode, pair-reference, and optional adjudication files;
+- unit tests, smoke-test commands, data schemas, and a revision/release checklist.
+
+## Important implementation boundaries
+
+- The default policy identifier, `DEMO-DRDME-v1`, is a **synthetic test fixture**, not a clinical guideline.
+- The default note extractor is **deterministic and rule-based**, not an LLM.
+- The repository has no image modality or multimodal embedding model. Do not describe it as having evaluated multimodal embeddings unless an externally documented implementation and run are added.
+- An `unsat` result means only that the two observed states are indistinguishable **under the encoded policy, input bindings, eligibility gate, and observation model**. It does not show that patients are clinically identical or interchangeable.
+- The public package emits **Equivalent under Policy** because it evaluates one named policy. An unqualified `Equivalent` verdict requires robust agreement across a documented approved policy set.
+
+## Quick start: synthetic verification only
 
 ```bash
 python -m venv .venv
@@ -34,10 +43,10 @@ python -m pip install --upgrade pip
 python -m pip install -e ".[dev]"
 
 python -m pytest -q
-python -m epp_nsv.experiments --n-pairs 64 --seed 17 --out-dir outputs/experiment
+python -m epp_nsv.experiments --n-pairs 300 --seed 7 --out-dir outputs/experiment
 ```
 
-Or run:
+Or:
 
 ```bash
 make install
@@ -45,21 +54,19 @@ make test
 make smoke
 ```
 
-The bundle is **synthetic software-validation evidence only**:
+The generated bundle includes:
 
-| Artifact | Content | Permitted interpretation |
+| File | Content | Permitted interpretation |
 |---|---|---|
-| `fixtures.jsonl` | Fresh constructed fixture inputs and expected synthetic verdicts. | Public schema/fixture inspection only. |
-| `policy_manifest.json` | Policy ID, hash, observation model, and missingness contract. | Defines the model-relative comparison. |
-| `pair_predictions.csv` | Expected synthetic verdict, predicted verdict, solver status, and reason. | Fixture conformance only. |
-| `audit_records.jsonl` | Admissible/rejected facts, evidence graphs, scope trace, and counterexamples. | Traceability only. |
-| `metrics.json` | Exact synthetic-fixture conformance and guard checks. | Not clinical performance. |
-| `run_manifest.json` | Seed, command, environment, lock hash, commit, and artifact hashes. | Rerun and integrity audit. |
-| `generated_table.tex` | Generated macros for synthetic-validation tables. | Never label as clinical results. |
+| `pair_predictions.csv` | Per-method synthetic predictions and reasons. | Fixture-level behavior only. |
+| `metrics.json` | Precision/recall/coverage against a synthetic policy oracle. | Software validation only. |
+| `run_metadata.json` | Scope, synthetic data declaration, policy ID, seed, and evidence boundary. | Audit record for the public run. |
+| `ablation_summary.csv` | Synthetic ablation comparison. | Demonstration of expected fixture behavior only. |
+| `report.md` | Human-readable synthetic-run summary. | Not a clinical result. |
 
-## Controlled-study harness
+## Controlled study harness
 
-A real-data study must run only in a governed environment with a locked phenotype, named data version, approved policy, patient-level partitioning, blinded reference standard, prespecified analysis plan, and local governance approval.
+A real-data study must run outside this repository with approved access, a locked protocol, a policy approved for the study, and a clinician reference standard. The public package provides a harness; it does **not** provide the clinical study itself.
 
 ```bash
 python -m epp_nsv.controlled \
@@ -70,20 +77,30 @@ python -m epp_nsv.controlled \
   --out-dir /secure/project/epp_run
 ```
 
-The harness writes controlled predictions, audit records, a summary, and a secure-run manifest with input/output hashes. Do not commit any controlled input or output to this public repository.
+The supplied policy factory must implement the documented EPP policy interface and must be locally reviewed. Do not commit inputs, policy secrets, clinical notes, raw adjudications, or output bundles containing protected information. See [`docs/CONTROLLED_STUDY.md`](docs/CONTROLLED_STUDY.md).
 
 ## Repository layout
 
 ```text
 epp-nsv/
-├── src/epp_nsv/              # State, policy, lifting, evidence graph, SMT verifier, experiments
-├── tests/                    # V2 unit and synthetic end-to-end tests
-├── docs/                     # V2 schema, protocol, release and scope documentation
-├── data/                     # Documentation/templates only; no patient data
-├── requirements.lock         # Tested dependency lock for the release record
+├── src/epp_nsv/              # State model, policy, lifting, SMT verifier, experiments
+├── tests/                    # Unit and synthetic end-to-end tests
+├── docs/                     # Scope, schemas, controlled-study protocol, release checklist
+├── data/synthetic/           # Synthetic-data documentation only
+├── data/governed/            # Empty guardrail directory; never commit controlled data
+├── scripts/run_smoke.sh      # Local synthetic smoke-test sequence
+├── CITATION.cff
 └── pyproject.toml
 ```
 
-## Safety and citation boundary
+## Citation and manuscript alignment
 
-Use `CITATION.cff` for the software prototype and cite the exact release tag or commit. A public `unsat` result means only that two inputs are indistinguishable under the encoded synthetic policy, observation model, and bindings. It does not establish clinical identity, clinical interchangeability, guideline validity, or safety in practice.
+Use `CITATION.cff` for this **software prototype**. The accompanying manuscript source in `paper/` is scoped as a methodological/protocol paper. A manuscript that reports real BioArc cohort counts, clinician adjudication, direct-LLM baselines, multimodal embedding results, or clinical performance requires the controlled-study artifacts identified in [`docs/ARTICLE_ALIGNMENT.md`](docs/ARTICLE_ALIGNMENT.md) and should not borrow the synthetic experiment results.
+
+## Clinical safety and data governance
+
+EPP-NSV is intended for retrospective research, audit, and methodological development. It is not validated for diagnosis, triage, treatment selection, or autonomous clinical use. Any future deployment requires local clinical validation, ethics approval where applicable, data-use agreements, security review, governance oversight, and monitoring.
+
+## License
+
+MIT. See [`LICENSE`](LICENSE).

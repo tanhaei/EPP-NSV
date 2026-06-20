@@ -32,6 +32,6 @@ The run writes fixtures, fixture manifest, policy manifest/hash, predictions, au
 
 ## Measures and interpretation
 
-The primary public measure is `fixture_conformance_rate`: the exact fraction of predicted verdicts matching the expected synthetic verdict. Additional checks report counterexample availability for expected non-equivalent fixtures, abstention correctness for expected indeterminate fixtures, scope safety for cross-eye fixtures, and unsafe-equivalence counts on guard fixtures.
+The primary public measure is `fixture_conformance_rate`: the exact fraction of predicted verdicts matching the expected synthetic verdict. Additional checks report witness availability for expected non-equivalent fixtures, abstention correctness for expected indeterminate fixtures, scope safety for cross-eye fixtures, and unsafe-equivalence counts on guard fixtures.
 
 Do not report these as clinical accuracy, precision, recall, coverage, safety, clinician agreement, latency, or BioArc performance.

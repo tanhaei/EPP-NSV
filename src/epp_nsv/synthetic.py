@@ -150,7 +150,7 @@ def build_pair_cases(n_pairs: int, seed: int = 7) -> list[PairCase]:
         a = _episode(rng, index * 10 + 1)
         a = _clone(a, "base", retinal_detachment=False, active_ocular_infection=False)
         b = a
-        expected = Verdict.EQUIVALENT_UNDER_GUIDELINE
+        expected = Verdict.EQUIVALENT_UNDER_POLICY
         expected_branch = _branch(policy, a)
         variant_expected: Verdict | None = None
 
@@ -224,7 +224,7 @@ def build_pair_cases(n_pairs: int, seed: int = 7) -> list[PairCase]:
             b = _clone(a, "version-b", macular_edema=True)
             expected = Verdict.NON_EQUIVALENT
             expected_branch = "default_non_centre_macular_branch"
-            variant_expected = Verdict.EQUIVALENT_UNDER_GUIDELINE
+            variant_expected = Verdict.EQUIVALENT_UNDER_POLICY
 
         cases.append(
             PairCase(

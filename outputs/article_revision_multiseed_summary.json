@@ -1,0 +1,82 @@
+[
+  {
+    "seed": 1,
+    "conformance": 1.0,
+    "counterexample": 1.0,
+    "indeterminate": 1.0,
+    "scope": 1.0,
+    "unsafe_equivalence": 0
+  },
+  {
+    "seed": 2,
+    "conformance": 1.0,
+    "counterexample": 1.0,
+    "indeterminate": 1.0,
+    "scope": 1.0,
+    "unsafe_equivalence": 0
+  },
+  {
+    "seed": 3,
+    "conformance": 1.0,
+    "counterexample": 1.0,
+    "indeterminate": 1.0,
+    "scope": 1.0,
+    "unsafe_equivalence": 0
+  },
+  {
+    "seed": 4,
+    "conformance": 1.0,
+    "counterexample": 1.0,
+    "indeterminate": 1.0,
+    "scope": 1.0,
+    "unsafe_equivalence": 0
+  },
+  {
+    "seed": 5,
+    "conformance": 1.0,
+    "counterexample": 1.0,
+    "indeterminate": 1.0,
+    "scope": 1.0,
+    "unsafe_equivalence": 0
+  },
+  {
+    "seed": 6,
+    "conformance": 1.0,
+    "counterexample": 1.0,
+    "indeterminate": 1.0,
+    "scope": 1.0,
+    "unsafe_equivalence": 0
+  },
+  {
+    "seed": 7,
+    "conformance": 1.0,
+    "counterexample": 1.0,
+    "indeterminate": 1.0,
+    "scope": 1.0,
+    "unsafe_equivalence": 0
+  },
+  {
+    "seed": 8,
+    "conformance": 1.0,
+    "counterexample": 1.0,
+    "indeterminate": 1.0,
+    "scope": 1.0,
+    "unsafe_equivalence": 0
+  },
+  {
+    "seed": 9,
+    "conformance": 1.0,
+    "counterexample": 1.0,
+    "indeterminate": 1.0,
+    "scope": 1.0,
+    "unsafe_equivalence": 0
+  },
+  {
+    "seed": 10,
+    "conformance": 1.0,
+    "counterexample": 1.0,
+    "indeterminate": 1.0,
+    "scope": 1.0,
+    "unsafe_equivalence": 0
+  }
+]

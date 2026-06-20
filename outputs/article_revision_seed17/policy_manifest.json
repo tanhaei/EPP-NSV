@@ -1,0 +1,38 @@
+{
+  "critical_fields": [
+    "dr_stage",
+    "macular_edema",
+    "centre_involvement",
+    "fundus_neovascularization",
+    "retinal_detachment",
+    "active_ocular_infection",
+    "oct_available",
+    "image_quality",
+    "visual_acuity_band",
+    "symptom_trajectory",
+    "functional_change_flag",
+    "prior_retina_review",
+    "prior_anti_vegf_state",
+    "prior_laser_state",
+    "followup_due_band"
+  ],
+  "decision_vector": [
+    "scope_status",
+    "management_tier",
+    "review_urgency_tier",
+    "evidence_status"
+  ],
+  "missingness_contract": "required unresolved evidence yields Indeterminate",
+  "non_centre_macular_requires_review": true,
+  "observation_model": {
+    "excludes_recorded_treatment_token": true,
+    "max_observation_age_days": 90,
+    "requires_pre_index_observation": true,
+    "requires_provenance": true,
+    "requires_validation": true
+  },
+  "policy_hash": "f7bbe4a6a8c3f183b163d71dd8e9aec31b54ae433b36d59a280c12ca2cb7239c",
+  "policy_id": "DEMO-DRDME-v1",
+  "rule_version": "v2-synthetic-1",
+  "synthetic_only": true
+}

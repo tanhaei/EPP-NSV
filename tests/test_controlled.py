@@ -46,7 +46,7 @@ def test_controlled_harness_runs_with_external_csv_and_policy_factory(tmp_path):
     rows = [_row("EP-A", "PT-A"), _row("EP-B", "PT-B")]
     episodes.write_text(",".join(header) + "\n" + "\n".join(",".join(row[name] for name in header) for row in rows) + "\n", encoding="utf-8")
     pairs = tmp_path / "pairs.csv"
-    pairs.write_text("pair_id,episode_a_id,episode_b_id,reference_verdict\nPAIR-1,EP-A,EP-B,Equivalent under Guideline\n", encoding="utf-8")
+    pairs.write_text("pair_id,episode_a_id,episode_b_id,reference_verdict\nPAIR-1,EP-A,EP-B,Equivalent under Policy\n", encoding="utf-8")
     output_dir = tmp_path / "result"
     summary = run_controlled_evaluation(
         episodes_path=episodes,

@@ -53,7 +53,7 @@ def test_synthetic_experiment_smoke(tmp_path):
         rows = list(csv.DictReader(handle))
     assert len(rows) == 64 * result["n_methods"]
     assert {row["expected_synthetic_verdict"] for row in rows} >= {
-        "Equivalent under Guideline",
+        "Equivalent under Policy",
         "Indeterminate",
         "Non-equivalent",
         "Out of scope",
