@@ -1,0 +1,7 @@
+# Tested public-reproducibility environment (2026-06-21)
+z3-solver==4.16.0.0
+pytest==9.1.1
+iniconfig==2.3.0
+packaging==26.2
+pluggy==1.6.0
+pygments==2.20.0

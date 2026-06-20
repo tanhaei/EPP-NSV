@@ -1,41 +1,28 @@
-# Validation Record
+# Validation Record — Release 0.3.0
 
 ## Validation environment
 
 - Date: 2026-06-21
 - Python: 3.13.5
-- `z3-solver`: 4.16.0
-- `pytest`: 9.0.2
-- Test command: `PYTHONPATH=src python -m pytest -q`
+- `z3-solver`: 4.16.0.0
+- `pytest`: 9.1.1
+- Dependency record: `requirements.lock`
 
 ## Commands executed
 
 ```bash
-python -m compileall -q src
-PYTHONPATH=src python -m pytest -q
-PYTHONPATH=src python -m epp_nsv.experiments \
-  --n-pairs 60 --seed 17 --out-dir outputs/smoke
+python -m compileall -q src tests
+python -m pytest -q
+python -m epp_nsv.experiments --n-pairs 64 --seed 17 --out-dir outputs/final_smoke
 ```
 
-A minimal controlled-harness integration run was also executed with two locally created synthetic-like rows and the bundled **demonstration** policy factory. No patient-level or BioArc data were accessed in validation.
+## Result boundary
 
-## Result
+- Compilation completed without error.
+- Unit/integration suite passed: **16 tests**.
+- The 64-pair seeded V2 synthetic run completed successfully.
+- Full EPP-NSV exact fixture conformance was `1.0` for that deterministic release run.
+- Expected missingness/staleness/contradiction fixtures abstained; cross-eye fixtures were out of scope; expected non-equivalent fixtures carried SMT counterexample traces.
+- The run bundle contained fixtures, fixture manifest, policy manifest/hash, predictions, audits, metrics, ablation summary, policy-version comparison, environment metadata, generated table commands, and a run manifest with artifact hashes.
 
-- `compileall`: completed without error.
-- Unit/integration suite: **11 passed**.
-- Synthetic smoke experiment: **60 generated patient-pair fixtures**, seed `17`, completed successfully.
-- Generated artifacts: `pair_predictions.csv`, `metrics.json`, `run_metadata.json`, `ablation_summary.csv`, and `report.md`.
-- Controlled-harness smoke check: wrote `controlled_predictions.csv` and `controlled_summary.json` from a temporary, non-clinical CSV input.
-
-## Synthetic smoke-run checks
-
-| Measure | Value |
-|---|---:|
-| Coverage | 0.6667 |
-| Indeterminate rate | 0.3333 |
-| Equivalence precision | 1.0000 |
-| Non-equivalence precision | 1.0000 |
-| Unsafe equivalence rate | 0.0000 |
-| Similarity--equivalence disagreement | 0.0500 |
-
-These values are **synthetic-fixture software-validation outputs**. They must not be reported as BioArc findings, clinician agreement, clinical performance, guideline validity, or patient-safety estimates. Re-run the commands after any code, dependency, or policy change; update this record with the exact environment and output hashes for a tagged release.
+These are **synthetic-fixture software-validation results only**. They do not demonstrate clinical accuracy, clinician agreement, safety, coverage, latency, guideline validity, treatment validity, BioArc performance, or real-patient interchangeability. Repeat the commands and regenerate the manifest after any code, policy, fixture, or dependency change.

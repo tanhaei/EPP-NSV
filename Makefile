@@ -7,7 +7,7 @@ test:
 	python -m pytest -q
 
 smoke:
-	python -m epp_nsv.experiments --n-pairs 60 --seed 17 --out-dir outputs/smoke
+	python -m epp_nsv.experiments --n-pairs 64 --seed 17 --out-dir outputs/smoke
 
 experiment:
 	python -m epp_nsv.experiments --n-pairs 300 --seed 7 --out-dir outputs/experiment

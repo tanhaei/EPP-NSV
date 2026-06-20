@@ -8,27 +8,53 @@ from epp_nsv.experiments import EXPERIMENT_SCOPE, run_experiment
 
 def test_synthetic_experiment_smoke(tmp_path):
     output_dir = tmp_path / "smoke"
-    result = run_experiment(n_pairs=60, seed=17, out_dir=output_dir)
+    result = run_experiment(n_pairs=64, seed=17, out_dir=output_dir)
 
-    assert result["n_pairs"] == 60
-    assert (output_dir / "pair_predictions.csv").exists()
-    assert (output_dir / "metrics.json").exists()
-    assert (output_dir / "run_metadata.json").exists()
-    assert (output_dir / "ablation_summary.csv").exists()
-    assert (output_dir / "report.md").exists()
+    assert result["n_pairs"] == 64
+    required = {
+        "fixtures.jsonl",
+        "fixture_manifest.json",
+        "policy_manifest.json",
+        "pair_predictions.csv",
+        "audit_records.jsonl",
+        "metrics.json",
+        "ablation_summary.csv",
+        "policy_version_perturbation.jsonl",
+        "environment.json",
+        "run_metadata.json",
+        "run_manifest.json",
+        "report.md",
+        "generated_table.tex",
+    }
+    assert required <= {path.name for path in output_dir.iterdir()}
 
-    with (output_dir / "metrics.json").open(encoding="utf-8") as handle:
-        metrics = json.load(handle)
-    assert "epp_nsv_full" in metrics
-    assert 0.0 <= metrics["epp_nsv_full"]["coverage"] <= 1.0
-    assert metrics["epp_nsv_full"]["verdict_indeterminate"] > 0
+    metrics = json.loads((output_dir / "metrics.json").read_text(encoding="utf-8"))
+    assert metrics["epp_nsv_full"]["fixture_conformance_rate"] == 1.0
+    assert metrics["epp_nsv_full"]["expected_indeterminate_abstention_rate"] == 1.0
+    assert metrics["epp_nsv_full"]["expected_out_of_scope_rate"] == 1.0
 
-    with (output_dir / "run_metadata.json").open(encoding="utf-8") as handle:
-        metadata = json.load(handle)
+    metadata = json.loads((output_dir / "run_metadata.json").read_text(encoding="utf-8"))
     assert metadata["experiment_scope"] == EXPERIMENT_SCOPE
     assert metadata["clinical_performance_claim_permitted"] is False
+    assert metadata["policy_hash"]
+
+    manifest = json.loads((output_dir / "run_manifest.json").read_text(encoding="utf-8"))
+    assert manifest["fixture_manifest"]["pair_count"] == 64
+    assert "fixture_manifest.json" in manifest["artifacts"]
+    assert "pair_predictions.csv" in manifest["artifacts"]
+
+    fixture_manifest = json.loads((output_dir / "fixture_manifest.json").read_text(encoding="utf-8"))
+    assert fixture_manifest["pair_count"] == 64
+    assert fixture_manifest["synthetic_declaration"]
+    assert len(fixture_manifest["pair_ids"]) == 64
+    assert fixture_manifest["family_ids"]
 
     with (output_dir / "pair_predictions.csv").open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
-    assert len(rows) == 60 * 6
-    assert {row["gold_source"] for row in rows} == {"synthetic_policy_oracle"}
+    assert len(rows) == 64 * result["n_methods"]
+    assert {row["expected_synthetic_verdict"] for row in rows} >= {
+        "Equivalent under Guideline",
+        "Indeterminate",
+        "Non-equivalent",
+        "Out of scope",
+    }

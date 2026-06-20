@@ -1,58 +1,41 @@
-# EPP-NSV Research Schema
+# V2 Synthetic Patient--Eye--Episode Schema
 
-## Scope and evidence boundary
+## Scope and release boundary
 
-This schema supports a **research-only DR/DME demonstration policy** and a controlled-study adapter. It contains no BioArc data and does not establish the actual availability, coverage, coding standard, or quality of any institutional dataset. Every real-data ingestion must occur under the applicable ethics approval, data-use agreement, security controls, and de-identification process.
+This public schema represents **BioArc-informed synthetic fixtures**, not BioArc records. It captures specialty-form structure and evidence semantics required to test a narrow DR/DME-inspired demonstration policy. It does not assert an institutional data dictionary, cohort size, availability, completeness, terminology mapping, or outcome validity.
 
-The canonical analysis unit is a **patient--eye--episode**, not a patient-wide vector. Every decision-relevant fact should retain laterality, observation time, source provenance, assertion status, validation status, and extraction confidence. A missing value is unknown, not a negative finding.
+## Unit of analysis
 
-## Core EHR domains anticipated by the framework
+A fixture state is a patient--eye--episode tuple with a synthetic patient key, synthetic episode key, encounter token, eye, index time, and field-level evidence metadata. Supported laterality values are `OD`, `OS`, `OU`, and `UNK`. `UNK` is unresolved evidence and yields an indeterminate result when laterality is required.
 
-| Domain | Typical fields | Potential role in EPP | Public-package status |
-|---|---|---|---|
-| Demographics | age, sex, encounter time | Cohort description and fairness audit; not a shortcut for equivalence. | Minimal fields represented. |
-| Diagnoses / comorbidity | DR/DME phenotype, systemic conditions | Scope gate and policy preconditions. | Disease-family token only in default policy. |
-| Procedures | imaging, injection, surgery, time line | Treatment history and pathway context. | Schema-level extension point. |
-| Medications | agent, exposure, hold, adverse event | Decision/safety constraints. | `anti_vegf_hold` fixture only. |
-| Labs / vitals | HbA1c, eGFR, creatinine, blood pressure | Potential policy constraints and temporal evidence. | Retained but unused by default policy. |
-| Clinical notes | findings, laterality, negation, uncertainty | Candidate fact extraction with evidence provenance. | Deterministic synthetic-fixture extractor only. |
-| Temporal order | source time and observation age | Excludes post-index or stale evidence. | Fundus-age guard implemented. |
-| Outcomes | complication, follow-up, subsequent care | Secondary retrospective analysis; never proof of index equivalence. | Not implemented in default policy. |
-| Research linkage | patient and episode pseudonyms | Episode construction and patient-level leakage control. | Minimal IDs represented. |
+## Executable CSV adapter
 
-## Specialty-form abstraction
+`src/epp_nsv/normalization.py` requires this header:
 
-| Module | Example fields | Role in a future disease-specific policy |
+```text
+episode_id,patient_id,encounter_token,eye,disease_family,observed_at,age_years,sex,hba1c,egfr,competing_pathology,dr_stage,macular_edema,centre_involvement,fundus_neovascularization,retinal_detachment,active_ocular_infection,oct_available,image_quality,visual_acuity_band,symptom_trajectory,functional_change_flag,prior_retina_review,prior_anti_vegf_state,prior_laser_state,followup_due_band,recorded_treatment_token,recorded_treatment_at,clinical_note
+```
+
+Optional JSON-object columns preserve the V2 evidence contract:
+
+```text
+provenance_json,evidence_spans_json,assertion_status_json,validation_status_json,field_observed_at_json,extraction_confidence_json
+```
+
+The adapter preserves an empty policy-critical cell as `None`. The full verifier then returns `Indeterminate`; it never treats absence as a negative finding.
+
+## Policy-visible synthetic field groups
+
+| Group | Representative fields | Role |
 |---|---|---|
-| A. External Eye Exam | eyelid position, conjunctiva status, corneal surface, sclera change, ocular alignment | Surface pathology and alternate-pathway constraints. |
-| B. Strabismus | deviation type/angle, laterality, fixation pattern, binocular function, gaze configuration | Strabismus decision tasks. |
-| C. Anterior Segment + Angle | cornea, chamber depth, cells/flare, iris, lens opacity, angle status | Cataract, glaucoma, inflammation, and safety branches. |
-| D. Fundus Exam | optic disc, macular oedema, vascular pattern, peripheral retina, tear/detachment | Primary synthetic DR/DME policy signal. |
-| E. Treatment Panel | medical/surgical categories, referral, follow-up | Observable decision-output components. |
+| Scope and identity | `disease_family`, `eye`, `observed_at`, `competing_pathology`, `encounter_token` | Establishes a valid patient--eye--episode comparison. |
+| Retinal disease state | `dr_stage`, `fundus_neovascularization`, `retinal_detachment` | Drives abstract retinal and urgent-exception branches. |
+| Macular and imaging state | `macular_edema`, `centre_involvement`, `oct_available`, `image_quality` | Determines whether an imaging-dependent synthetic branch is evaluable. |
+| Visual function | `visual_acuity_band`, `symptom_trajectory`, `functional_change_flag` | Provides non-prescriptive review context. |
+| Prior care history | `prior_retina_review`, `prior_anti_vegf_state`, `prior_laser_state`, `followup_due_band` | Encodes only pre-index history. |
+| Evidence quality | metadata JSON fields | Controls provenance, validation, temporal admissibility, confidence, and conservative abstention. |
+| Leakage trap | `recorded_treatment_token`, `recorded_treatment_at` | Kept for audit but excluded from policy inputs. |
 
-The public prototype does **not** assert that these are the exact fields, user interface, or controlled vocabulary of the BioArc system. A clinical study must supply a separately approved data dictionary and mapping document.
+## Observation contract
 
-## Minimal executable CSV adapter
-
-The adapter in `src/epp_nsv/normalization.py` requires:
-
-```text
-episode_id,patient_id,eye,disease_family,observed_at,age_years,sex,hba1c,egfr,
-dr_stage,macular_edema,fundus_neovascularization,retinal_detachment,
-active_ocular_infection,anti_vegf_hold,fundus_age_days,clinical_note
-```
-
-Optional JSON-object columns preserve audit metadata:
-
-```text
-provenance_json,evidence_spans_json,assertion_status_json,validation_status_json,
-field_observed_at_json,extraction_confidence_json
-```
-
-Empty safety-critical cells remain `None`. The full verifier returns `Indeterminate` rather than treating them as absent.
-
-## Decision-critical fields in the synthetic policy
-
-`dr_stage`, `macular_edema`, `fundus_neovascularization`, `retinal_detachment`, `active_ocular_infection`, `anti_vegf_hold`, and `fundus_age_days`.
-
-The default policy uses a **90-day fundus observation window** solely as a testable synthetic rule. A governed clinical study must replace it with a clinically approved policy, evidence hierarchy, temporal window, and change log.
+Every policy-critical fact must have a declared value, source, evidence-span token, assertion state, validation state, observation time, and confidence between 0 and 1. A fact is rejected when missing, stale, post-index, contradictory, unvalidated, unsupported, or otherwise malformed. The default synthetic observation window is 90 days solely to create testable fixtures; it is not a clinical recommendation.

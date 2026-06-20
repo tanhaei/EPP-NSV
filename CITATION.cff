@@ -5,7 +5,7 @@ type: software
 authors:
   - family-names: Tanhaei
     given-names: Mohammad
-version: 0.2.0
+version: 0.3.0
 date-released: 2026-06-21
 license: MIT
 abstract: "Research-only prototype for decision-scoped patient-state equivalence, with synthetic DR/DME verification fixtures and a controlled-study harness. The package contains no patient-level data and no clinical-performance results."
