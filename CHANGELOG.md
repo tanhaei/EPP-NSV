@@ -1,5 +1,23 @@
 # Changelog
 
+## Unreleased
+
+### Independent-oracle and mutation testing
+
+- Added `epp_nsv.independent_oracle.IndependentOracle`: a second, grammar-derived
+  implementation of the pairwise verdict that shares no decision logic with
+  `policy.py`/`verifier.py`, used to report non-self-referential agreement.
+- Added `epp_nsv.mutation`: a mutation-testing harness that injects single-point
+  policy faults (six classes) and scores kills through the real SMT-backed
+  verifier against the seeded fixture suite. Mutant populations are enumerated
+  from documented operator catalogues (emergent counts); mutant kills are
+  measured at run time. No score is hardcoded.
+- Added `epp-nsv-mutation` console script, `make mutation`, `docs/MUTATION_TESTING.md`,
+  and `tests/test_mutation.py` (z3-free oracle tests plus a z3-guarded harness test).
+- Note: the committed harness enumerates 64 mutants. If the manuscript mutation
+  table reports a different population, regenerate the table from this harness;
+  the committed code is the ground truth.
+
 ## 0.3.1 - 2026-06-21
 
 ### Terminology and verification boundary

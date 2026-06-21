@@ -33,6 +33,7 @@ dev = [
 [project.scripts]
 epp-nsv-experiment = "epp_nsv.experiments:main"
 epp-nsv-controlled = "epp_nsv.controlled:main"
+epp-nsv-mutation = "epp_nsv.mutation:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

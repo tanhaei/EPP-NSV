@@ -10,6 +10,7 @@ from .models import (
 )
 from .policy import DRDMEPolicy
 from .verifier import EPPVerifier
+from .independent_oracle import IndependentOracle
 
 __all__ = [
     "DecisionVector",
@@ -20,4 +21,5 @@ __all__ = [
     "VerificationResult",
     "DRDMEPolicy",
     "EPPVerifier",
+    "IndependentOracle",
 ]
